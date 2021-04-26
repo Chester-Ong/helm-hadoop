@@ -1,0 +1,28 @@
+{{- if .Values.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hadoop.fullname" . }}
+  labels:
+    {{- include "hadoop.labels" . | nindent 4 }}
+spec:
+  clusterIP: None
+  ports:
+    - name: node-manager
+      port: {{ .Values.service.nodeManagerPort }}
+      protocol: TCP
+    - name: resource-manager
+      port: {{ .Values.service.resourceManagerPort }}
+      protocol: TCP
+    - name: name-node
+      port: {{ .Values.service.nameNodePort }}
+      protocol: TCP
+    - name: data-node
+      port: {{ .Values.service.dataNodePort }}
+      protocol: TCP
+    - name: job-history
+      port: {{ .Values.service.jobHistoryPort }}
+      protocol: TCP
+  selector:
+    {{- include "hadoop.selectorLabels" . | nindent 4 }}
+{{- end }}

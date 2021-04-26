@@ -1,0 +1,34 @@
+{{- if .Values.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "hadoop.fullname" . }}
+  labels:
+    {{- include "hadoop.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "hadoop.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "hadoop.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        {{- include "hadoop.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: hadoop
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+          - containerPort: {{ .Values.service.nodeManagerPort }}
+            name: node-mgr
+          - containerPort: {{ .Values.service.resourceManagerPort }}
+            name: resource-mgr
+          - containerPort: {{ .Values.service.nameNodePort }}
+            name: name-node
+          - containerPort: {{ .Values.service.dataNodePort }}
+            name: data-node
+          - containerPort: {{ .Values.service.jobHistoryPort }}
+            name: job-history
+{{- end }}
