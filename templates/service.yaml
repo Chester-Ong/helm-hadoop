@@ -8,6 +8,8 @@ metadata:
 spec:
   clusterIP: None
   ports:
+    - name: hdfs
+      port: {{ .Values.service.hdfsPort }}
     - name: node-manager
       port: {{ .Values.service.nodeManagerPort }}
       protocol: TCP
