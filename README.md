@@ -1,9 +1,5 @@
 # Simple Helm chart for Hadoop 3
 
-## Prerequisites
-
-Retrieve and build hadoop3:latest from https://github.com/Chester-Ong/hadoop3
-
 ## How-to
 
 **Install as a subchart**
